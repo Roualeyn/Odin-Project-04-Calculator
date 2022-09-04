@@ -13,12 +13,72 @@ function multiply(a, b) {
 function divide(a, b) {
     return Number(a) / Number(b);
 }
+
+function operate(a, b) {
+    let result;
+    const sign = calculator.operator;
+    if (sign == "+") {
+        result = sum(a,b);
+    } else if (sign == "-") {
+        result = subtract(a,b);
+    } else if (sign == "*") {
+        result = multiply(a,b);
+    } else if (sign == "/") {
+        result = divide(a,b);
+    } else {
+        throw "Operate has invalid sign";
+    }
+    calculator.currentBar.innerText = result;
+    return result;
 }
 
-function operate(a, b, sign) {
-    return sign == "+" ? sum(a,b)
-    : sign == "-" ? subtract(a,b)
-    : sign == "*" ? multiply(a,b)
-    : sign == "/" ? divide(a,b)
-    : NaN;
+function pressedOperator() {
+    if (calculator.firstValue == "") {
+        calculator.firstValue = calculator.current;
+        calculator.operator = this.innerText;
+        calculator.current = "";
+    } else if (this.innerText == "="){
+        calculator.current = operate(calculator.firstValue, calculator.current);
+        calculator.operator = "";
+        calculator.firstValue = "";
+    } else {
+        calculator.firstValue = operate(calculator.firstValue, calculator.current);
+        calculator.operator = this.innerText;
+        calculator.current = "";
+    }
 }
+
+function numberPress() {
+    if (this.innerText == "." && calculator.current.includes(".")) {
+        return;
+    }
+    calculator.current += this.innerText;
+    calculator.currentBar.innerText = calculator.current;
+}
+
+function clear(){
+    calculator.firstValue = "";
+    calculator.operator = ""
+    calculator.current = "";
+    calculator.currentBar.innerText = "";
+}
+
+const calculator = {
+    firstValue: "",
+    operator: "",
+    current: "",
+    currentBar: document.querySelector(".result-bar")
+};
+
+// Add listener to every number
+for (let button of document.querySelectorAll(".number")) {
+    button.addEventListener("click", numberPress);
+};
+
+// Add listener to operators
+for (let button of document.querySelectorAll(".operator")) {
+    button.addEventListener("click", pressedOperator);
+}
+
+// Add listener to clear button.
+document.querySelector("#c").addEventListener("click", clear);
