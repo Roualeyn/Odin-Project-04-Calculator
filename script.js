@@ -32,7 +32,7 @@ function operate(a, b) {
     return result;
 }
 
-function pressedOperator() {
+function processOperatorPressed() {
     if (calculator.firstValue == "") {
         calculator.firstValue = calculator.current;
         calculator.operator = this.innerText;
@@ -48,7 +48,7 @@ function pressedOperator() {
     }
 }
 
-function numberPress() {
+function processNumberPressed() {
     if (this.innerText == "." && calculator.current.includes(".")) {
         return;
     }
@@ -56,7 +56,7 @@ function numberPress() {
     calculator.currentBar.innerText = calculator.current;
 }
 
-function clear(){
+function clearAll() {
     calculator.firstValue = "";
     calculator.operator = ""
     calculator.current = "";
@@ -72,13 +72,13 @@ const calculator = {
 
 // Add listener to every number
 for (let button of document.querySelectorAll(".number")) {
-    button.addEventListener("click", numberPress);
+    button.addEventListener("click", processNumberPressed);
 };
 
 // Add listener to operators
 for (let button of document.querySelectorAll(".operator")) {
-    button.addEventListener("click", pressedOperator);
+    button.addEventListener("click", processOperatorPressed);
 }
 
 // Add listener to clear button.
-document.querySelector("#c").addEventListener("click", clear);
+document.querySelector("#c").addEventListener("click", clearAll);
