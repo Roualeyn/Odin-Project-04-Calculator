@@ -29,27 +29,34 @@ button {
     font-size: large;
 }
 
-.operator, #c {
+.operator, #c, #backspace {
     background-color: hsl(210, 100%, 95%);
 }
 
-button:hover {
+
+
+button:hover, #backspace:hover {
     background-color: var(--hover-colour);
 }
 
-button:active {
+button:active, #backspace:active {
     background-color: var(--click-colour);
 }
 
+#backspace {
+    grid-column: 4 / 5;
+}
+
 .result-bar {
+    grid-column: 1 / 4;
+    display: flex;
+    justify-content: end;
+    align-items: center;
     background-color: var(--white);
     color: var(--outline);
-    text-align: right;
-    grid-column: 1 / 5;
     border: 1px solid var(--outline);
     border-radius: 0.5em;
-    padding: 0.5em;
-    height: 1em;
+    padding: 1em;
 }
 
 .calc-grid {

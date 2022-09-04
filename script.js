@@ -63,6 +63,11 @@ function clearAll() {
     calculator.currentBar.innerText = "";
 }
 
+function removeLastCharacter() {
+    calculator.current = calculator.current.slice(0, -1);
+    calculator.currentBar.innerText = calculator.current;
+}
+
 const calculator = {
     firstValue: "",
     operator: "",
@@ -80,5 +85,6 @@ for (let button of document.querySelectorAll(".operator")) {
     button.addEventListener("click", processOperatorPressed);
 }
 
-// Add listener to clear button.
+// Add listener to clear and backspace buttons.
 document.querySelector("#c").addEventListener("click", clearAll);
+document.querySelector("#backspace").addEventListener("click", removeLastCharacter);
